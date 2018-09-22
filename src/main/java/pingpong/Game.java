@@ -1,10 +1,9 @@
 package pingpong;
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Game {
-    static volatile boolean isEntered = false;
-    static  volatile boolean isFinished = false;
+import java.util.concurrent.*;
+
+public class Game implements Atomic {
+
 
     public static void main(String[] args) {
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
@@ -12,7 +11,7 @@ public class Game {
         scheduledExecutorService.scheduleAtFixedRate(new Ai(), 2, 2, TimeUnit.SECONDS);
         scheduledExecutorService.scheduleAtFixedRate(new Check(), 0, 2, TimeUnit.SECONDS);
 
-        while (!isFinished){
+        while (!isFinished.equals(isTrue)) {
             Thread.yield();
         }
 

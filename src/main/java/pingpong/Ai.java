@@ -1,18 +1,21 @@
 package pingpong;
 
-import static pingpong.Game.isEntered;
-import static pingpong.Game.isFinished;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Ai implements Runnable {
+
+public class Ai implements Runnable, Atomic {
+
+
     @Override
     public void run() {
-        if(isEntered){
+        if (isEntered.compareAndSet(false, true)) {
             System.out.println("Bamm!");
-            isEntered = false;
-            isFinished = false;
+            isEntered.set(false);
+            isFinished.set(false);
 
-        }else {
-            isFinished = true;
+        } else {
+            isFinished.set(true);
         }
     }
+
 }
